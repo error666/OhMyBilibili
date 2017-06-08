@@ -1,0 +1,26 @@
+{
+  "name":"Clean bilibili",
+  "description":"Give back my clean bilibili.",
+  "version":"0.1",
+  "permissions": [
+          "tabs",
+          "storage",
+          "webNavigation",
+          "*://*/*"
+        ],
+  "background": {
+     "scripts": ["lib/jquery-3.2.1.min.js","background.js"]
+   },
+  "page_action":{
+    "default_icon":"images/icon3.png",
+    "default_title":"不想见你(bilibili)"
+  },
+  "content_scripts":[
+    {
+      "matches": ["*://*.bilibili.com/*"],
+      "js": ["lib/jquery-3.2.1.min.js","script.js"]
+    }
+  ],
+  "options_page": "options.html",
+  "manifest_version":2
+}

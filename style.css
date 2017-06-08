@@ -1,0 +1,57 @@
+body {
+    width: 400px;
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 15px;
+}
+
+div {
+    border-top: 1px solid #eee;
+}
+
+p#display-keywords {
+    overflow: hidden;
+}
+
+div#input-keywords {
+    margin-bottom: 25px;
+}
+
+.item-word {
+    background: #ffafc9;
+    color: #fff;
+    padding: 1px 10px 0;
+    border-radius: 30px;
+    margin: 0 5px 5px 0;
+    float: left;
+}
+
+.remove-button {
+    margin: 3px 0 -3px 5px;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-color: blue;
+    border-radius: 8px;
+    cursor: pointer;
+    background: url("images/cross-15px.png") no-repeat;
+}
+
+.remove-button:hover {
+    background: url("images/cross-hover-15px.png") no-repeat;
+    background-color: #FFC0CB;
+}
+
+input[type="button"] {
+    height: 36px;
+    width: 120px;
+    border: 1px solid #0381aa;
+    color: #fff;
+    background-color: #00a7de;
+}
+
+input#new-word {
+    height: 30px;
+    width: 260px;    
+}

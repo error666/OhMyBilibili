@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <style>
+        body {
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <p>结界已经覆盖：</p>
+        <p id="display-keywords"></p>
+    </div>
+    <div id="input-keywords">
+        <p></p>
+        <input id="new-word" type="text" placeholder="up主昵称/标题/描述中不想看到的字眼">
+        <input type="button" id="save" value="添加" />
+    </div>
+    <div id="defense-count">
+        <p>你已成功防御精神污染<span id="defense-count-num"></span>次</p>
+    </div>
+<script type="text/javascript" src="lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="popup.js"></script>
+</body>
+</html>
