@@ -47,7 +47,6 @@ function processPage() {
           $(this).parents("li")[0].remove();
         }
         if($(this).is("[class*='tag-item']")){
-          // console.log("find");
           count +=1;
           chrome.runtime.sendMessage({
             method: "sendDefenseCount",
