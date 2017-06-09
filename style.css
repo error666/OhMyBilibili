@@ -21,24 +21,27 @@ div#input-keywords {
 .item-word {
     background: #ffafc9;
     color: #fff;
-    padding: 1px 10px 0;
+    padding: 1px 15px 0;
     border-radius: 30px;
     margin: 0 5px 5px 0;
     float: left;
 }
 
 .remove-button {
-    margin: 3px 0 -3px 5px;
-    display: inline-block;
     width: 15px;
     height: 15px;
-    background-color: blue;
+    display: inline-block;
+    margin: 3px 0 -3px 5px;
     border-radius: 8px;
-    cursor: pointer;
+    /*background-color: #FFC0CB;*/
+    background-color: blue;
     background: url("images/cross-15px.png") no-repeat;
 }
 
 .remove-button:hover {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
     background: url("images/cross-hover-15px.png") no-repeat;
     background-color: #FFC0CB;
 }

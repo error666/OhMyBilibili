@@ -3,50 +3,64 @@ var defenseCount = localStorage.defenseCount;
 displayKeywords();
 displaydefenseCount();
 
-// å°†æ‰€æœ‰æƒ³å±è”½çš„å…³é”®è¯æ”¾åœ¨å•ç‹¬çš„spané‡Œæ˜¾ç¤ºå‡ºæ¥
+// ½«ËùÓĞÏëÆÁ±ÎµÄ¹Ø¼ü´Ê·ÅÔÚµ¥¶ÀµÄspanÀïÏÔÊ¾³öÀ´
 function displayKeywords() {
-    // æ¸…é™¤å·²æœ‰çš„ span å…ƒç´ ï¼Œé˜²æ­¢é‡å¤æ˜¾ç¤º
+    // Çå³ıÒÑÓĞµÄ span ÔªËØ£¬·ÀÖ¹ÖØ¸´ÏÔÊ¾
     $('#display-keywords').empty();
-    keywordsDisplay = localStorage.keywords.split(',');
-    for(var i = 0; i < keywordsDisplay.length; i++) {
-        var wordSpan = document.createElement('span');
-        wordSpan.innerHTML = keywordsDisplay[i];
-        wordSpan.className = "item-word";
-        // æ·»åŠ å…³é”®è¯å³ä¾§çš„åˆ é™¤æŒ‰é’®
-        var removeButton = document.createElement('a');
-        removeButton.className = "remove-button";
-        removeButton.onclick = function() {
-            removeFromLocalStorage(this.parentNode.firstChild.nodeValue);
-        };
-        wordSpan.appendChild(removeButton);
-        document.getElementById('display-keywords').appendChild(wordSpan);
+    if (localStorage.keywords) {
+        keywordsDisplay = localStorage.keywords.split(',');
+        for (var i = 0; i < keywordsDisplay.length; i++) {
+            var wordSpan = document.createElement('span');
+            wordSpan.setAttribute("tabindex", "-1")
+            wordSpan.innerHTML = keywordsDisplay[i];
+            wordSpan.className = "item-word";
+
+            // Ìí¼Ó¹Ø¼ü´ÊÓÒ²àµÄÉ¾³ı°´Å¥
+            var removeButton = document.createElement('a');
+            removeButton.className = "remove-button";
+            removeButton.setAttribute("style", "display:none");
+            removeButton.onclick = function() {
+                removeFromLocalStorage(this.parentNode.firstChild.nodeValue);
+            };
+            wordSpan.appendChild(removeButton);
+            document.getElementById('display-keywords').appendChild(wordSpan);
+            wordSpan.onmouseover = function() {
+                this.childNodes[1].removeAttribute("style");
+            }
+            wordSpan.onmouseout = function() {
+                this.childNodes[1].setAttribute("style", "display:none");
+            }
+        }
     }
 }
 
-function displaydefenseCount(){
-    if(defenseCount){
-        $("#defense-count-num").val(defenseCount);
-    }else{
-        $("#defense-count-num").val("0");    
+
+function displaydefenseCount() {
+    if (defenseCount) {
+        $("#defense-count-num").html(defenseCount);
+    } else {
+        $("#defense-count-num").html("0");
     }
 }
- 
-// åœ¨è¾“å…¥æ¡†å†…æŒ‰ä¸‹å›è½¦ä¼šè§¦å‘æŒ‰é’®å•å‡»äº‹ä»¶
+
+// ÔÚÊäÈë¿òÄÚ°´ÏÂ»Ø³µ»á´¥·¢°´Å¥µ¥»÷ÊÂ¼ş
 $('#new-word').keydown(function(event) {
     if (event.keyCode === 13) {
         $('#save').trigger('click');
     }
 });
 
-$('#save').click(function(){
-    var $newWordInput = $('#new-word');
-    var newWord = $newWordInput.val();
+$('#new-word').blur(function(){
+    $('#tip_text').html("");
+});
 
-    if (newWord !== ' ') {  // è¿™ä¸ªåˆ¤æ–­ç”¨äºé˜²æ­¢æŠŠç©ºæ ¼ä½œä¸ºå…³é”®å­—
+$('#save').click(function() {
+    var $newWordInput = $('#new-word');
+    var newWord = $newWordInput.val().trim();
+    if (newWord) { // Õâ¸öÅĞ¶ÏÓÃÓÚ·ÀÖ¹°Ñ¿Õ¸ñ×÷Îª¹Ø¼ü×Ö
         if (localStorage.keywords && localStorage.keywords !== '') {
             if (keywordsDisplay.indexOf(newWord) > -1) {
-                // è¿™é‡Œåˆ¤æ–­å…ƒç´ æ˜¯å¦å·²å­˜åœ¨
-                alert(newWord + "å·²ç»å­˜åœ¨");
+                $('#tip_text').html("¹Ø¼ü×ÖÒÑ¾­´æÔÚ");
                 return;
             }
             localStorage.keywords += (',' + newWord);
@@ -55,14 +69,16 @@ $('#save').click(function(){
         }
         $newWordInput.val("");
         displayKeywords();
+    }else{
+        $('#tip_text').html("²»Òªİ”Èë¿Õ¸ñ£¡");
     }
 });
 
-// ä»localStorageä¸­åˆ é™¤ä¸€ä¸ªå…³é”®è¯
+// ´ÓlocalStorageÖĞÉ¾³ıÒ»¸ö¹Ø¼ü´Ê
 function removeFromLocalStorage(value) {
     var values = localStorage.keywords.split(',');
-    for(var i = 0 ; i < values.length ; i++) {
-        if(values[i] === value) {
+    for (var i = 0; i < values.length; i++) {
+        if (values[i] === value) {
             values.splice(i, 1);
             localStorage.keywords = values.join(',');
             displayKeywords();
@@ -70,4 +86,3 @@ function removeFromLocalStorage(value) {
         }
     }
 }
-

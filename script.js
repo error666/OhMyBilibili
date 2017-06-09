@@ -8,16 +8,7 @@ chrome.runtime.sendMessage({
   keywords = str !== '' ? str.split(',') : [];
 });
 
-// keywords是异步获取的，可能运行至此，值还没有传过来，所以用延时来解决
-if (keywords.length === 0) {
-  setTimeout(function() {
-    processPage();
-  }, 1500);
-} else {
-  processPage();
-}
-
-// 当页面加载更多答案的时候，重新运行处理程序
+// 当页面加载时，运行主要处理函数
 // 使用MutationObserver来检测页面的变动
 let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 let observerMutationSupport = !!MutationObserver;
@@ -43,7 +34,7 @@ function processPage() {
   // alert("LOVE AND PEACE");
   for (var i = 0; i < keywords.length; i++) {
     var keyword = keywords[i];
-    if (keyword) { // 防止出现所有答案都被屏蔽的情况（可以用其它的方法来避免）
+    if (keyword) {
       var dislikething = $("[title*='" + keyword + "'],[data-txt*='" + keyword + "'],[data-up*='" + keyword + "']");
       // console.log(dislikething)
       dislikething.each(function() {
@@ -53,8 +44,16 @@ function processPage() {
             method: "sendDefenseCount",
             param: count
           });
-          console.log("已经干掉了:" + count);
           $(this).parents("li")[0].remove();
+        }
+        if($(this).is("[class*='tag-item']")){
+          // console.log("find");
+          count +=1;
+          chrome.runtime.sendMessage({
+            method: "sendDefenseCount",
+            param: count
+          });
+          this.remove();
         }
         if ($(this).parents(".spread-module")[0]) {
           count += 1;
@@ -62,16 +61,14 @@ function processPage() {
             method: "sendDefenseCount",
             param: count
           });
-          console.log("已经干掉了:" + count);
           $(this).parents(".spread-module")[0].remove();
         }
-        if($(this).parents("[class*='small-item fakeDanmu-item']")[0]){
+        if ($(this).parents("[class*='small-item fakeDanmu-item']")[0]) {
           count += 1;
           chrome.runtime.sendMessage({
             method: "sendDefenseCount",
             param: count
           });
-          console.log("已经干掉了:" + count);
           $(this).parents("[class*='small-item fakeDanmu-item']")[0].remove();
         }
       });
